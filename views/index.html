@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+    <head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="referrer" content="no-referrer">
+        <title>{{ get('title') or 'meta search' }}</title>
+    </head>
+    <body>
+	<style>
+	.photo {float:left;width:150px;}
+	.photo img {max-width:150px; max-height:150px}
+	.clear {clear:both;line-height:2px;border-bottom:1px dotted gray}
+	</style>
+		<form method="{{ get('method') or 'GET' }}" action="/" id="search_form">
+			<div id="search_wrapper">
+				<input type="text" placeholder="" id="q" class="q" name="q" tabindex="1" autocomplete="off" size="100" value="{{ get('q') }}"/>
+				<input type="submit" value="search" id="search_submit" />
+			</div>
+		</form>
+
+            {{ get('content') }}
+			% for item in results:
+			{{ print(item) }}
+			<div class="row">
+				% if item.get('photo'):
+				<div class="photo"><img src="{{item['photo']}}" /></div>
+				% end
+				<div class="title">
+					<a href="{{ item['url'] }}">{{ item['title'] }}</a>
+				<div>
+				<div class="content">{{ item['content'] }}</div>
+			</div>
+			<div class="clear">&nbsp;</div
+			% end
+
+        </div>
+    </body>
+</html>
