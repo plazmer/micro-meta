@@ -5,7 +5,6 @@ from io import BytesIO
  
 # Экземпляры загруженных плагинов
 Plugins = []
-Query = ''
 
 default_params = {'method':'GET','page':1}
 
@@ -34,7 +33,7 @@ def search(num):
     return p.response(r)"""
 
 def LoadPlugins(destdir='plugins'):
-    ss = [ f for f in os.listdir(destdir) if os.path.isfile(os.path.join(destdir,f)) ]
+    ss = [ f for f in os.listdir(destdir) if os.path.isfile(os.path.join(destdir,f)) and f!='__init__.py' ]
     sys.path.insert( 0, destdir) # Добавляем папку плагинов в $PATH, чтобы __import__ мог их загрузить
  
     for s in ss:
