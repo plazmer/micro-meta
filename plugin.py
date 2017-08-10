@@ -5,6 +5,10 @@ from io import BytesIO
  
 # Экземпляры загруженных плагинов
 Plugins = []
+Query = ''
+
+default_params = {'method':'GET','page':1}
+
  
 def http( params ):    
     headers={'user-agent':'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36'}
@@ -12,16 +16,22 @@ def http( params ):
         r = requests.get(params['url'])
     else:
         r = requests.post(params['url'],data=params.get('post'))
-    encoding = r.headers.get('Content-Type').split('=')[-1]    
-    return r.content.decode(encoding)
+    tmp = r.headers.get('Content-Type').split('=')
+    encoding='utf-8'
+    if len(tmp)>1:
+        encoding=tmp[-1]
+    params['page'] = r.content.decode(encoding)
+    return params
 
-def search(query):
-    for p in Plugins:
-        params = {'method':'GET','page':1}
-        #import pdb; pdb.set_trace()
-        r = http(p.request(query,params))
-        for item in p.response(r):
-            yield item
+def search(num):
+    print(num, Plugins)
+    p = Plugins[num]
+    print('started',p)
+    """
+    params = {'method':'GET','page':1}
+    #import pdb; pdb.set_trace()
+    r = http(p.request(Query,params))
+    return p.response(r)"""
 
 def LoadPlugins(destdir='plugins'):
     ss = [ f for f in os.listdir(destdir) if os.path.isfile(os.path.join(destdir,f)) ]
@@ -35,13 +45,3 @@ def LoadPlugins(destdir='plugins'):
     print(Plugins)
     return
  
-if __name__ == "__main__":
-    query = 'холодильник'
-    LoadPlugins()
-    print(Plugins)
-    p = Plugins[0]
-    params = {'method':'GET','page':1}
-    req = p.request(query,params)
-    print(req)
-    r = http(req)
-    print(p.response(r))
