@@ -23,7 +23,7 @@
 			% for item in results:
 			{{ print(item) }}
 			<div class="row">
-				<div class="name">{{ item['name'] }}</div>
+				<div class="name"><a href="{{ item['searched'] }}">{{ item['name'] }}</a></div>
 				% if item.get('photo'):
 				<div class="photo"><img src="{{item['photo']}}" /></div>
 				% end

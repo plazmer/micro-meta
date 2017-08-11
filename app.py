@@ -28,7 +28,9 @@ def search_handler():
 
         for results in results_thread:
             parsed = results['engine'].parse(results['page'])
+            searched = results['url']
             for result in parsed:
+                result['searched'] = searched
                 vars['results'].append(result)
 
     return template('index.html', vars)

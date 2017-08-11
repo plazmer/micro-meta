@@ -1,11 +1,11 @@
 import os
 import sys
 import plugin
-from plugins.irr import request, parse
+from plugins.doski import request, parse
 
-query = "холодильник"
+query = "компрессор"
 
-params = plugin.default_params
+params = plugin.default_params()
 req = request(query, params, None)
 print(req)
 
