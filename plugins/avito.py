@@ -5,7 +5,7 @@ import sys
 
 name='Avito'
 base_url = 'https://avito.ru'
-search_url = '/ekaterinburg?q={query}'
+search_url = '/rossiya?user=1&bt=1&q={query}&s=2'
 
 def request(query, params, engine):
     print(type(query),query)
