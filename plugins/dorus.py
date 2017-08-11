@@ -27,7 +27,7 @@ def parse(resp):
             res = {'url': result.xpath('.//a/@href')[0],
                    'title': ''.join(result.xpath('.//a/text()')).strip(),
                    'content': clean_html(''.join(result.xpath('.//text()')).strip()),
-                   'photo':None,
+                   'photo':'',
                    'name':name
                     }
         except:

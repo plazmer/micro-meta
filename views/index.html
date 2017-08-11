@@ -10,6 +10,7 @@
 	.photo {float:left;width:150px;}
 	.photo img {max-width:150px; max-height:150px}
 	.clear {clear:both;line-height:2px;border-bottom:1px dotted gray}
+	.name {float:right}
 	</style>
 		<form method="{{ get('method') or 'GET' }}" action="/" id="search_form">
 			<div id="search_wrapper">
@@ -22,12 +23,13 @@
 			% for item in results:
 			{{ print(item) }}
 			<div class="row">
+				<div class="name">{{ item['name'] }}</div>
 				% if item.get('photo'):
 				<div class="photo"><img src="{{item['photo']}}" /></div>
 				% end
 				<div class="title">
 					<a href="{{ item['url'] }}">{{ item['title'] }}</a>
-				<div>
+				</div>
 				<div class="content">{{ item['content'] }}</div>
 			</div>
 			<div class="clear">&nbsp;</div
