@@ -1,18 +1,6 @@
 from bottle import *
 import plugin
 
-#@route('<filepath:path>')
-#def server_static(filepath):
-#    return static_file(filepath, root='static')
-
-
-def search_multi(q):
-    results = []
-    for result in plugin.search(vars['q']):
-        results.append(result)
-
-
-
 @get('/')
 def search_handler():
     plugin.LoadPlugins()
@@ -45,5 +33,7 @@ def search_handler():
     return template('index.html', vars)
 
 if __name__ == "__main__":
-    run(host='localhost', port=8888, debug=True)
-    
+    run(host='localhost', port=8080, debug=True)  
+else:
+    #app=application=default_app()
+    app = application = default_app()
