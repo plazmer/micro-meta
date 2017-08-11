@@ -4,7 +4,7 @@ import sys
 
 
 name='IRR'
-base_url = 'http://ekaterinburg.irr.ru'
+base_url = 'http://russia.irr.ru'
 search_url = '/searchads/search/keywords={query}/sort/date_sort:desc/'
 
 def request(query, params, engine):
