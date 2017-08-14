@@ -1,7 +1,7 @@
 import os
 import sys
 import plugin
-from plugins.doski import request, parse
+from plugins.ubu import request, parse
 
 query = "компрессор"
 
