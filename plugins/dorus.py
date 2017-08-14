@@ -28,7 +28,8 @@ def parse(resp):
                    'title': ''.join(result.xpath('.//a/text()')).strip(),
                    'content': clean_html(''.join(result.xpath('.//text()')).strip()),
                    'photo':'',
-                   'name':name
+                   'price':'',
+                   'from':name
                     }
         except:
             print(sys.exc_info())

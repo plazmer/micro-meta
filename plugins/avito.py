@@ -23,9 +23,10 @@ def parse(resp):
         try:
             res = {'url': base_url+result.xpath('.//a[@class="item-description-title-link"]/@href')[0],
                    'title': ''.join(result.xpath('.//a[@class="item-description-title-link"]/text()')).strip(),
-                   'content': ''.join(result.xpath('.//div[@class="about"]//text()')).strip(),
+                   'content': ' '.join(result.xpath('.//div[@class="data"]/p/text()')).strip(),
                    'photo':'https:'+result.xpath('.//div[@class="b-photo"]/a/img/@src')[0],
-                   'name':name
+                   'price': ''.join(result.xpath('.//div[@class="about"]/text()')).strip(),
+                   'from':name
                     }
         except Exception as e:
             print(sys.exc_info())

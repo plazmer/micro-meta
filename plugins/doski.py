@@ -5,7 +5,7 @@ import sys
 
 name='doski'
 base_url = 'http://www.doski.ru'
-search_url = '/?cat=0&plc=1&src={query}'
+search_url = '/?cat=0&plc=1&src={query}&fl2=on'
 
 def request(query, params, engine):
     print(type(query),query)
@@ -24,9 +24,9 @@ def parse(resp):
             res = { 'url': 'http:'+''.join(result.xpath('./td[@class="tdc"]/a/@href')),
                     'title': ''.join(result.xpath('.//a[@class="sbj"]/text()')),
                     'content': ''.join(result.xpath('.//td[2]/text()')).strip(),
-                    'price': ''.join(result.xpath('.//td[3]/text()')).strip(),
+                    'price': ''.join(result.xpath('.//td[3]//text()')).replace('Цена','').strip(),
                     'photo': 'http:'+''.join(result.xpath('./td[@class="tdc"]/a/img/@src')),
-                    'name':name }
+                    'from':name }
         except Exception as e:
             print(sys.exc_info())
             continue

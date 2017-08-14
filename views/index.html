@@ -2,39 +2,50 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
     <head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta charset="utf-8">
         <meta name="referrer" content="no-referrer">
         <title>{{ get('title') or 'meta search' }}</title>
+
+        <!-- bootsrap -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
     </head>
     <body>
 	<style>
-	.photo {float:left;width:150px;}
+	.photo {width:150px;}
 	.photo img {max-width:150px; max-height:150px}
 	.clear {clear:both;line-height:2px;border-bottom:1px dotted gray}
-	.name {float:right}
+	.name {}
 	</style>
 		<form method="{{ get('method') or 'GET' }}" action="/" id="search_form">
 			<div id="search_wrapper">
-				<input type="text" placeholder="" id="q" class="q" name="q" tabindex="1" autocomplete="off" size="100" value="{{ get('q') }}"/>
+				<input type="text" placeholder="" id="q" class="q" name="q" tabindex="1" autocomplete="off" size="50" value="{{ get('q') }}"/>
 				<input type="submit" value="search" id="search_submit" />
 			</div>
 		</form>
-
+		<table border="1">
             {{ get('content') }}
 			% for item in results:
-			{{ print(item) }}
-			<div class="row">
-				<div class="name"><a href="{{ item['searched'] }}">{{ item['name'] }}</a></div>
-				% if item.get('photo'):
-				<div class="photo"><img src="{{item['photo']}}" /></div>
-				% end
-				<div class="title">
-					<a href="{{ item['url'] }}">{{ item['title'] }}</a>
-				</div>
-				<div class="content">{{ item['content'] }}</div>
-			</div>
-			<div class="clear">&nbsp;</div
+			<tr>
+				<td class="photo">
+					% if item.get('photo'):
+					<img src="{{item['photo']}}" />
+					% end
+				</td>
+				<td>
+					<div class="title">
+						<a href="{{ item['url'] }}">{{ item['title'] }}</a>					
+					</div>
+					<div class="content">{{ item['content'] }}</div>
+				</td>
+				<td>
+					<div class="price"><nobr>{{ item.get('price') }}</nobr></div>
+					<div class="from"><a href="{{ item['searched'] }}">{{ item['from'] }}</a></div>
+				</td>
+			</tr>
 			% end
-
+		</table>
         </div>
     </body>
 </html>
