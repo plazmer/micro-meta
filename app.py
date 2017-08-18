@@ -1,5 +1,7 @@
 from bottle import *
 import plugin
+import utils
+import sqlite3
 
 plugin.LoadPlugins()
 
@@ -7,7 +9,6 @@ plugin.LoadPlugins()
 def search_handler():
     vars = {}
     vars['results']=[]
-
 
     #import pdb; pdb.set_trace()    
     vars['q'] = request.query.getunicode('q')
@@ -19,8 +20,7 @@ def search_handler():
         threads = [None] * cnt
         for i in range(cnt):
             params = plugin.Plugins[i].request(vars['q'],plugin.default_params(),plugin.Plugins[i])
-            print(params)
-            threads[i] = threading.Thread(target=plugin.http, args=(params, results_thread, i))
+            threads[i] = threading.Thread(target=utils.threadHttp, args=(params, results_thread, i))
             threads[i].start()
 
         for i in range(cnt):
@@ -34,6 +34,14 @@ def search_handler():
                 vars['results'].append(result)
 
     return template('index.html', vars)
+
+@get('/list')
+def list_query():
+    connection=sqlite3.connect('.queries.db')
+    connection.row_factory = sqlite3.Row
+    
+    return template('index.html', vars)
+
 
 if __name__ == "__main__":    
     run(host='localhost', port=8080, debug=True)  

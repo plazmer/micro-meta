@@ -1,14 +1,15 @@
 import os
 import sys
 import plugin
-from plugins.doski import request, parse
+import utils
+from plugins.avito import request, parse
 
-query = "bitzer"
+query = "труба нержавеющая"
 
 params = plugin.default_params()
 req = request(query, params, None)
 print(req)
 
-html = plugin.http(req)
-for r in parse(html['page']):
+html = utils.http(req)
+for r in parse(html):
 	print(r['photo'])

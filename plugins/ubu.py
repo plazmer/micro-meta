@@ -7,7 +7,6 @@ base_url = 'https://www.ubu.ru'
 search_url = '/ru?str={query}&show=1'
 
 def request(query, params, engine):
-    print(type(query),query)
     params['url'] = base_url + search_url.format(query=quote(query))
     params['method'] = 'GET'
     params['page'] = 1
@@ -23,11 +22,15 @@ def parse(resp):
             res = { 'url': base_url+''.join(result.xpath('./td[3]//a/@href')),
                     'title': ''.join(result.xpath('./td[3]//a/h3/text()')),
                     'content': ''.join(result.xpath('./td[3]//div[@itemprop="description"]/text()')).strip() + ' ' + ' '.join(result.xpath('./td[3]//span[@class="name-town"]/text()')).strip(),
-                    'photo': 'https:'+''.join(result.xpath('./td[2]//a/img/@src')),
+                    'photo': result.xpath('./td[2]//img[@itemprop="image"]/@src')[0],
                     'price':''.join(result.xpath('.//meta[@itemprop="price"]/@content'))+' РУБ.',
                     'from':name }
+            if res['photo'][0:2]=='//':
+                res['photo'] = 'https:' + res['photo']
+            else:
+                res['photo'] = base_url + res['photo']
         except Exception as e:
-            print(sys.exc_info())
+            print(name, sys.exc_info())
             continue
         results.append(res)
     return results

@@ -32,7 +32,7 @@ def parse(resp):
                    'from':name
                     }
         except:
-            print(sys.exc_info())
+            print(name, sys.exc_info())
             continue
         results.append(res)
     return results

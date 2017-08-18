@@ -8,7 +8,6 @@ base_url = 'http://russia.irr.ru'
 search_url = '/searchads/search/keywords={query}/sort/date_sort:desc/'
 
 def request(query, params, engine):
-    print(type(query),query)
     params['url'] = base_url + search_url.format(query=quote(query))
     params['method'] = 'GET'
     params['page'] = 1
@@ -28,7 +27,7 @@ def parse(resp):
                     'price':''.join(result.xpath('.//div[@class="listing__itemPrice"]/text()')).strip(),
                     'from':name }
         except Exception as e:
-            print(sys.exc_info())
+            print(name, sys.exc_info())
             continue
         results.append(res)
     return results
