@@ -11,12 +11,14 @@ def default_params():
     return {'method':'GET','page':1}
  
 def http( params, results={}, index=0 ):
-    headers={'user-agent':'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36'}
+    if not params.get('headers'):
+        params['headers'] = {}
+    params['headers']['user-agent'] = 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36'
 
     if params.get('method')=='GET':
-        r = requests.get(params['url'],headers=headers)
+        r = requests.get(params['url'],headers=params['headers'])
     else:
-        r = requests.post(params['url'],data=params.get('post'),headers=headers)
+        r = requests.post(params['url'],data=params.get('post'),headers=params['headers'])
 
     tmp = r.headers.get('Content-Type').split('=')
     encoding='utf-8'

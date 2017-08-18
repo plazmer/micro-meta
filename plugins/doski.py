@@ -25,8 +25,12 @@ def parse(resp):
                     'title': ''.join(result.xpath('.//a[@class="sbj"]/text()')),
                     'content': ''.join(result.xpath('.//td[2]/text()')).strip(),
                     'price': ''.join(result.xpath('.//td[3]//text()')).replace('Цена','').strip(),
-                    'photo': 'http:'+''.join(result.xpath('./td[@class="tdc"]/a/img/@src')),
+                    'photo': ''.join(result.xpath('./td[@class="tdc"]/a/img/@src')),
                     'from':name }
+            if res['photo'][0:2]=='//':
+                res['photo'] = 'http:' + res['photo'] 
+            else:
+                res['photo'] = base_url + res['photo'] 
         except Exception as e:
             print(sys.exc_info())
             continue

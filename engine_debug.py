@@ -1,14 +1,14 @@
 import os
 import sys
 import plugin
-from plugins.ubu import request, parse
+from plugins.doski import request, parse
 
-query = "компрессор"
+query = "bitzer"
 
 params = plugin.default_params()
 req = request(query, params, None)
 print(req)
 
 html = plugin.http(req)
-
-print(parse(html['page']))
+for r in parse(html['page']):
+	print(r['photo'])
