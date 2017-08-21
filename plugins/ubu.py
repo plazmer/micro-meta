@@ -1,6 +1,7 @@
 from lxml import html
 from urllib.parse import quote
 import sys
+import traceback
 
 name='UBU'
 base_url = 'https://www.ubu.ru'
@@ -22,7 +23,7 @@ def parse(resp):
             res = { 'url': base_url+''.join(result.xpath('./td[3]//a/@href')),
                     'title': ''.join(result.xpath('./td[3]//a/h3/text()')),
                     'content': ''.join(result.xpath('./td[3]//div[@itemprop="description"]/text()')).strip() + ' ' + ' '.join(result.xpath('./td[3]//span[@class="name-town"]/text()')).strip(),
-                    'photo': result.xpath('./td[2]//img[@itemprop="image"]/@src')[0],
+                    'photo': ''.join(result.xpath('./td[2]//img[@itemprop="image"][1]/@src')),
                     'price':''.join(result.xpath('.//meta[@itemprop="price"]/@content'))+' РУБ.',
                     'from':name }
             if res['photo'][0:2]=='//':
@@ -30,7 +31,7 @@ def parse(resp):
             else:
                 res['photo'] = base_url + res['photo']
         except Exception as e:
-            print(name, sys.exc_info())
+            traceback.print_exc()
             continue
         results.append(res)
     return results

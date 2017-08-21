@@ -32,7 +32,6 @@ def parse(resp):
               res['photo'] = None
             res['price'] = ''.join(result.xpath('.//div[@class="about"]/text()')).strip()
             res['from'] = name
-            print(res)
         except Exception as e:
             traceback.print_exc()
             continue
