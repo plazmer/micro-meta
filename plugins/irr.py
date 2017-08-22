@@ -21,7 +21,7 @@ def parse(resp):
     for result in dom.xpath('//div[@class="listing__itemInner"]'):
         try:
             res = { 'url': ''.join(result.xpath('.//a/@href')),
-                    'title': ''.join(result.xpath('.//a/div/text()')),
+                    'title': ' '.join(result.xpath('.//a/div/text()')),
                     'content': ', '.join(result.xpath('.//div[contains(@class,"js-listingText")]/text()')).strip(),
                     'photo': ''.join(result.xpath('.//img/@data-src')),
                     'price':''.join(result.xpath('.//div[@class="listing__itemPrice"]/text()')).strip(),

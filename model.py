@@ -7,6 +7,7 @@ from log import logger
 connection=sqlite3.connect('.queries.db')
 connection.row_factory = sqlite3.Row
 plugin.LoadPlugins()
+checkDB()
 
 def checkDB():
     def checkTable(table):
@@ -69,7 +70,7 @@ def getQuerys():
 def getResults(query, limit=30):
     result = []
     cursor = connection.cursor()
-    cursor.execute('SELECT * FROM results where query=? ORDER BY added desc LIMIT ?',(query,limit, ))
+    cursor.execute('SELECT *, datetime(added, "localtime") as added_local FROM results where query=? ORDER BY added desc LIMIT ?',(query,limit, ))
     for res in cursor.fetchall():
         result.append(dict(res))
     return result
