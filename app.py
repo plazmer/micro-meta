@@ -2,24 +2,24 @@ from bottle import *
 import plugin
 import utils
 import sqlite3
-
-plugin.LoadPlugins()
+import model
+from pprint import pprint
 
 @get('/')
 def search_handler():
     vars = {}
-    vars['results']=[]
 
-    #import pdb; pdb.set_trace()    
-    vars['q'] = request.query.getunicode('q')
-    if vars['q']:
-        print('query ', vars['q'])
+    vars['results']=[]
+    query = request.query.getunicode('q')
+    if query:
+        print('query ', query)
+        vars['q'] = query
 
         cnt = len(plugin.Plugins)
         results_thread = [None] * cnt
         threads = [None] * cnt
         for i in range(cnt):
-            params = plugin.Plugins[i].request(vars['q'],plugin.default_params(),plugin.Plugins[i])
+            params = plugin.Plugins[i].request(query,plugin.default_params(),plugin.Plugins[i])
             threads[i] = threading.Thread(target=utils.threadHttp, args=(params, results_thread, i))
             threads[i].start()
 
@@ -31,20 +31,24 @@ def search_handler():
             searched = results['url']
             for result in parsed:
                 result['searched'] = searched
-                vars['results'].append(result)
-
-    return template('index.html', vars)
+                vars['results'].append(result)        
+    return template('results.html', vars)
 
 @get('/list')
 def list_query():
-    connection=sqlite3.connect('.queries.db')
-    connection.row_factory = sqlite3.Row
-    
-    return template('index.html', vars)
+    vars = {}
+
+    headers = model.getQuerys()
+    vars['headers'] = headers
+
+    vars['results'] = []
+    for h in headers:
+        vars['results'].append( {'id':h['id'], 'items': model.getResults(h['q']) } )
+    return template('tabs.html', vars)
 
 
 if __name__ == "__main__":    
-    run(host='localhost', port=8080, debug=True)  
+    run(host='localhost', port=8080, debug=True, reloader=True)  
 else:
     #app=application=default_app()
     app = application = default_app()

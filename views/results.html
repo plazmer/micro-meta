@@ -1,0 +1,23 @@
+% rebase("index.html")
+		<table border="1">
+			% for item in results:
+			<tr>
+				<td class="photo">
+					% if item.get('photo'):
+					<img src="{{item['photo']}}" />
+					% end
+				</td>
+				<td>
+					<div class="title">
+						<a href="{{ item['url'] }}">{{ item['title'] }}</a>					
+					</div>
+					<div class="content">{{ item['content'] }}</div>
+				</td>
+				<td>
+					<div class="price"><nobr>{{ item.get('price') }}</nobr></div>
+					<div class="from"><a href="{{ item['searched'] }}">{{ item['from'] }}</a></div>
+				</td>
+			</tr>
+			% end
+		</table>
+

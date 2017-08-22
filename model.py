@@ -58,7 +58,7 @@ def getNextQuery():
         connection.commit()
     return result
 
-def getQueryies():
+def getQuerys():
     result = []
     cursor = connection.cursor()
     cursor.execute('SELECT * FROM query ORDER BY q')
@@ -66,10 +66,10 @@ def getQueryies():
         result.append(dict(res))
     return result
 
-def getResults(query_id):
+def getResults(query, limit=30):
     result = []
     cursor = connection.cursor()
-    cursor.execute('SELECT * FROM query where id=? ORDER BY added desc',(query_id,))
+    cursor.execute('SELECT * FROM results where query=? ORDER BY added desc LIMIT ?',(query,limit, ))
     for res in cursor.fetchall():
         result.append(dict(res))
     return result

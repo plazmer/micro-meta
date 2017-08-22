@@ -6,46 +6,26 @@
         <meta name="referrer" content="no-referrer">
         <title>{{ get('title') or 'meta search' }}</title>
 
-        <!-- bootsrap -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    </head>
-    <body>
 	<style>
 	.photo {width:150px;}
 	.photo img {max-width:150px; max-height:150px}
 	.clear {clear:both;line-height:2px;border-bottom:1px dotted gray}
 	.name {}
 	</style>
+
+        <!-- bootsrap -->
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    </head>
+    <body>
 		<form method="{{ get('method') or 'GET' }}" action="/" id="search_form">
 			<div id="search_wrapper">
 				<input type="text" placeholder="" id="q" class="q" name="q" tabindex="1" autocomplete="off" size="50" value="{{ get('q') }}"/>
 				<input type="submit" value="search" id="search_submit" />
 			</div>
 		</form>
-		<table border="1">
-            {{ get('content') }}
-			% for item in results:
-			<tr>
-				<td class="photo">
-					% if item.get('photo'):
-					<img src="{{item['photo']}}" />
-					% end
-				</td>
-				<td>
-					<div class="title">
-						<a href="{{ item['url'] }}">{{ item['title'] }}</a>					
-					</div>
-					<div class="content">{{ item['content'] }}</div>
-				</td>
-				<td>
-					<div class="price"><nobr>{{ item.get('price') }}</nobr></div>
-					<div class="from"><a href="{{ item['searched'] }}">{{ item['from'] }}</a></div>
-				</td>
-			</tr>
-			% end
-		</table>
-        </div>
+		{{!get('base')}}
     </body>
 </html>
