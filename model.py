@@ -4,11 +4,6 @@ import utils
 import timeit
 from log import logger
 
-connection=sqlite3.connect('.queries.db')
-connection.row_factory = sqlite3.Row
-plugin.LoadPlugins()
-checkDB()
-
 def checkDB():
     def checkTable(table):
         cursor=connection.cursor()
@@ -119,3 +114,9 @@ def search(q):
 
     elapsed = timeit.default_timer() - start_time_full
     logger.debug('query: %s \t\t added: %s \t\tin %.2f s'%(q,cnt,elapsed))
+
+
+connection=sqlite3.connect('.queries.db')
+connection.row_factory = sqlite3.Row
+plugin.LoadPlugins()
+checkDB()
