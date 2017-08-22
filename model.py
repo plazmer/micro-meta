@@ -3,6 +3,7 @@ import plugin
 import utils
 import timeit
 from log import logger
+import os
 
 def checkDB():
     def checkTable(table):
@@ -116,7 +117,10 @@ def search(q):
     logger.debug('query: %s \t\t added: %s \t\tin %.2f s'%(q,cnt,elapsed))
 
 
-connection=sqlite3.connect('.queries.db')
+HOME_DIR = os.path.dirname(os.path.abspath(__file__))
+
+connection=sqlite3.connect(HOME_DIR+'/.queries.db')
 connection.row_factory = sqlite3.Row
-plugin.LoadPlugins()
+if not plugin.Plugins:
+    plugin.LoadPlugins()
 checkDB()
